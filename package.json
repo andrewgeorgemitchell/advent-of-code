@@ -1,0 +1,32 @@
+{
+  "name": "advent-of-code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewgeorgemitchell/advent-of-code.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewgeorgemitchell/advent-of-code/issues"
+  },
+  "homepage": "https://github.com/andrewgeorgemitchell/advent-of-code#readme",
+  "dependencies": {
+    "bun": "^1.0.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "3.0.3",
+    "tsx": "^3.13.0",
+    "typescript": "^5.2.2"
+  }
+}
