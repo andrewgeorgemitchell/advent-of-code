@@ -1,5 +1,5 @@
 const parseFileInput = async () => {
-  const fileString = await Bun.file('day01.data.txt').text()
+  const fileString = await Bun.file('./2016/day01/day01.data.txt').text()
 
   const directions = fileString.split(', ').map((raw) => {
     const [direction, ...magnitudeStr] = raw
