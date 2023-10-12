@@ -86,7 +86,7 @@ const findCode = ({
   keypadType?: '1' | '2'
 }) => {
   const keypad = new Keypad(keypadType)
-  keypad.debug = true
+  // keypad.debug = true
 
   return sequences
     .map((sequence) => {
