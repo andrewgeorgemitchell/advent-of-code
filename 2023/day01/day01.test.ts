@@ -30,7 +30,7 @@ const testInput2 = [
 test('Day 01 - Part 2: Test input2 answer', async () => {
   const result = day01.calculateCalibrations(testInput2, {
     part2: true,
-    debug: true,
+    // debug: true,
   })
   expect(result).toBe(281)
 })
