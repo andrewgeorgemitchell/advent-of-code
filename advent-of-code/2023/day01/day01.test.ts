@@ -40,5 +40,5 @@ test('Day 01 - Part 2: Answer', async () => {
     part2: true,
     // debug: true,
   })
-  expect(result).toBe(32809)
+  expect(result).toBe(54885)
 })

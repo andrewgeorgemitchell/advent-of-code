@@ -1,5 +1,5 @@
 const getData = () => {
-  return Bun.file('./2016/day02/day02.data.txt').text()
+  return Bun.file('./advent-of-code/2016/day02/day02.data.txt').text()
 }
 
 const parseFileString = (str: string) =>
