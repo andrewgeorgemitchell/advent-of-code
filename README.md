@@ -11,6 +11,8 @@ This repo uses bun to run typescript files without having to compile them first.
 
 ## Advent of TypeScript
 
+Install dependencies with bun by running `bun install`
+
 Advent of typescript is simple compile checking, so you do not need to run anything if you editor is already checking for typescript errors.
 
 ## Advent of Code
