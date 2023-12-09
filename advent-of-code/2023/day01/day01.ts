@@ -1,7 +1,5 @@
 const parseFileInput = async () => {
-  const fileString = await Bun.file(
-    './advent-of-code/2023/day01/day01.data.txt',
-  ).text()
+  const fileString = await Bun.file(import.meta.dir + '/day01.data.txt').text()
 
   return fileString.split('\n')
 }

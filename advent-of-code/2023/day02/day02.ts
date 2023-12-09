@@ -2,8 +2,7 @@ type Colors = 'red' | 'blue' | 'green'
 
 const parseFileInput = async (input?: string) => {
   const fileString =
-    input ??
-    (await Bun.file('./advent-of-code/2023/day02/day02.data.txt').text())
+    input ?? (await Bun.file(import.meta.dir + '/day02.data.txt').text())
 
   const games = fileString.split('\n').map((gameStr, i) => {
     const [_gameNum, roundStr] = gameStr.split(':')
