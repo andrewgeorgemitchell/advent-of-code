@@ -1,23 +1,48 @@
 import { Expect, Equal } from 'type-testing'
 
 // Solution
-type DecipherNaughtyList<ListRaw extends string> =
-  ListRaw extends `${infer U}/${infer Rest}`
-    ? U | DecipherNaughtyList<Rest>
-    : ListRaw
+type DayCounter<
+  Start extends number,
+  End extends number,
+  Store extends Array<number> = [1],
+> = End extends Store['length']
+  ? Store[number]
+  : DayCounter<Start, End, [...Store, [...Store, 0]['length']]>
 
 // Tests
-type test_0_actual = DecipherNaughtyList<'timmy/jimmy'>
+type TwelveDaysOfChristmas = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+type test_0_actual = DayCounter<1, 12>
 //   ^?
-type test_0_expected = 'jimmy' | 'timmy'
+type test_0_expected = TwelveDaysOfChristmas
 type test_0 = Expect<Equal<test_0_expected, test_0_actual>>
 
-type test_1_actual = DecipherNaughtyList<'elliot'>
+type DaysUntilChristmas =
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 18
+  | 19
+  | 20
+  | 21
+  | 22
+  | 23
+  | 24
+  | 25
+type test_1_actual = DayCounter<1, 25>
 //   ^?
-type test_1_expected = 'elliot'
+type test_1_expected = DaysUntilChristmas
 type test_1 = Expect<Equal<test_1_expected, test_1_actual>>
-
-type test_2_actual = DecipherNaughtyList<'melkey/prime/theo/trash'>
-//   ^?
-type test_2_expected = 'melkey' | 'prime' | 'theo' | 'trash'
-type test_2 = Expect<Equal<test_2_expected, test_2_actual>>
