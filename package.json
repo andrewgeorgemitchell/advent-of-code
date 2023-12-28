@@ -27,7 +27,7 @@
     "bun-types": "^1.0.5-canary.20231009T140142",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
-    "prettier": "3.0.3",
+    "prettier": "3.1.1",
     "tsx": "^3.13.0",
     "type-testing": "^0.2.0",
     "typescript": "^5.2.2"
