@@ -9,18 +9,18 @@ type WhoWins<
 > = T extends K
   ? 'draw'
   : T extends '👊🏻'
-  ? K extends '🖐🏾'
-    ? 'win'
-    : 'lose'
-  : T extends '🖐🏾'
-  ? K extends '✌🏽'
-    ? 'win'
-    : 'lose'
-  : T extends '✌🏽'
-  ? K extends '👊🏻'
-    ? 'win'
-    : 'lose'
-  : never
+    ? K extends '🖐🏾'
+      ? 'win'
+      : 'lose'
+    : T extends '🖐🏾'
+      ? K extends '✌🏽'
+        ? 'win'
+        : 'lose'
+      : T extends '✌🏽'
+        ? K extends '👊🏻'
+          ? 'win'
+          : 'lose'
+        : never
 
 // Tests
 type test_0_actual = WhoWins<'👊🏻', '🖐🏾'>

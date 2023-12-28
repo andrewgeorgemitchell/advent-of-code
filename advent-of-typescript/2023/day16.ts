@@ -19,8 +19,8 @@ type FindSanta<
     ? CheckRow<'🎅🏼', CurrRow> extends number
       ? [Store['length'], CheckRow<'🎅🏼', CurrRow>]
       : RestRows extends string[][]
-      ? FindSanta<RestRows, [...Store, Store['length']]>
-      : never
+        ? FindSanta<RestRows, [...Store, Store['length']]>
+        : never
     : never
   : never
 
