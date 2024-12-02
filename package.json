@@ -5,6 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start",
     "test": "bun test",
     "test:watch": "bun test --watch"
   },
@@ -19,17 +22,25 @@
   },
   "homepage": "https://github.com/andrewgeorgemitchell/advent-of-code#readme",
   "dependencies": {
-    "bun": "^1.0.4"
+    "@tanstack/react-router": "^1.85.0",
+    "@tanstack/start": "^1.85.0",
+    "bun": "^1.1.21",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vinxi": "^0.4.3"
   },
   "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
-    "bun-types": "^1.0.5-canary.20231009T140142",
+    "@vitejs/plugin-react": "^4.3.4",
+    "bun-types": "1.1.38",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "3.1.1",
     "tsx": "^3.13.0",
     "type-testing": "^0.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.7.2"
   }
 }

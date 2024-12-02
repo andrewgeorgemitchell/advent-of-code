@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "module": "esnext",
-    "target": "esnext",
+    "target": "ES2022",
     "moduleResolution": "bundler",
     "noEmit": true,
     "allowImportingTsExtensions": true,
@@ -13,7 +13,9 @@
     "composite": true,
     "downlevelIteration": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["bun-types"]
+    "jsx": "react-jsx",
+    "strictNullChecks": true,
+    "types": ["bun-types", "react"]
   },
   "include": ["./**/*.ts", "./**/*.js"]
 }
