@@ -3,28 +3,82 @@ Advent of Code Challenge Implementation Process
 For each new day's challenge, follow these steps to create a consistent solution structure:
 
 1. Story Processing
-   a. Create a concise one-paragraph summary of the challenge story
-   b. Create a -scene.tsx file with ASCII art representation:
+   a. Story Summary Guidelines:
+      - Focus on the narrative and world-building first
+      - Structure the summary in three parts:
+        1. Setting/Context: Where are we and what's happening?
+        2. Character Interaction: Who are we meeting and what's their role?
+        3. Problem Statement: What needs to be solved?
+      
+      Example 1 (Day 3, 2023):
+      ```
+      High up in the mountains, you've reached a gondola lift station that promises to take you to the water source. 
+      The friendly Elf who guided you this far explains this is as far as they can go. Inside the station, you find 
+      an engineering schematic of the gondola's engine, but some of the numbers are hard to read. To ensure a safe 
+      journey, you need to find all part numbers in the schematic that are adjacent to any symbol.
+      ```
+
+      Example 2 (Day 1, 2023):
+      ```
+      Something is wrong with global snow production, and you've been selected to check it out. The Elves have even 
+      given you a map to the Stars - their source of snow magic. There's just one problem: their calibration document 
+      was printed on very old hardware, and the first line of text got garbled. You need to recover the calibration 
+      values from each line to get the trebuchet working again.
+      ```
+
+      Bad Example (too problem-focused):
+      ```
+      You need to find all numbers in the engine schematic that are adjacent to symbols and sum them up. Numbers are 
+      not valid if they're only adjacent to periods. The schematic contains various symbols and numbers arranged in a 
+      grid pattern.
+      ```
+
+   b. Create a -scene.tsx file with ASCII art representation that captures key story elements:
       ```typescript
       import { StringLiteralColorizer } from '../../../../components/ASCIIArt/StringLiteralColorizer/StringLiteralColorizer'
 
+      // Example 1: Gondola over water (Day 3, 2023)
       const SceneString = `
-      // ASCII art representing the story
-      // Example:
-      //    _____
-      //   |     |
-      //   | KEY |
-      //   |_____|
+         /\\___/\\     Mountain Station
+        /  | |  \\    
+       |===|_|===|   
+      [|   ⚡︎ ⚡︎   |]  
+      [|    ▣    |]  
+       |___|_|___|   
+           |         
+           |         
+      ≈≈≈≈≈≈≈≈≈≈≈≈≈≈ Water Source
+      ≈≈≈≈≈≈≈≈≈≈≈≈≈≈
+      `
+
+      // Example 2: Trebuchet (Day 1, 2023)
+      const SceneString2 = `
+           /\\
+          /  \\
+         /    \\
+        /      \\ ⚓︎
+       /   |    \\
+      /    |     \\
+     |     |      |
+     |=====|======|
+     |     O      |
+      \\   / \\    /
+       \\ /   \\  /
+        ▣     ▣
       `
 
       const SceneColorMap = {
-        // Map characters to Tailwind CSS classes
-        // Example:
-        '_': 'text-gray-400',
+        // Use meaningful colors that enhance the scene
+        '/': 'text-gray-400',  // structure/cables
+        '\\': 'text-gray-400',
         '|': 'text-gray-400',
-        'K': 'text-green-500',
-        'E': 'text-green-500',
-        'Y': 'text-green-500',
+        '[': 'text-blue-400',  // gondola cabin
+        ']': 'text-blue-400',
+        '⚡︎': 'text-yellow-400', // electrical symbols
+        '▣': 'text-orange-400', // mechanical parts
+        '≈': 'text-blue-300',   // water
+        '⚓︎': 'text-gray-500',   // weights/anchors
+        'O': 'text-red-500',    // pivot points
       }
 
       export const Scene = () => (
@@ -35,12 +89,23 @@ For each new day's challenge, follow these steps to create a consistent solution
       )
       ```
    c. ASCII Art Guidelines:
-      - Keep it simple and relevant to the story
-      - Use basic ASCII characters for better compatibility
-      - Include key elements from the challenge
-      - Add animation classes for dynamic elements
-      - Use color mapping for visual interest
-      - Keep size reasonable (typically 15-20 lines max)
+      - Focus on story elements rather than puzzle input
+      - Create a visual representation of the key story components
+      - Use meaningful symbols that enhance understanding
+      - Consider the following elements:
+        * Environmental context (mountains, water, space, etc.)
+        * Key machinery or devices (gondolas, trebuchets, computers)
+        * Dynamic elements that can be animated
+        * Labels or annotations where helpful
+      - Recommended symbols:
+        * Basic structure: /, \\, |, -, _, =
+        * Special elements: ⚡︎ (electricity), ▣ (machinery), ⚓︎ (weights)
+        * Nature: ≈ (water), * (snow), ~ (waves)
+        * Containers: [], (), {}, <>
+      - Size guidelines:
+        * Width: 20-30 characters max
+        * Height: 10-15 lines max
+        * Keep it compact but recognizable
 
 2. File Structure Setup
    Create the following files in app/routes/(2024)/2024/day-XX/ (replace XX with day number):
@@ -114,19 +179,36 @@ For each new day's challenge, follow these steps to create a consistent solution
 
 5. React Component (index.tsx)
    a. Create a component with sections for both parts
-   b. Include:
+   b. Import the default input data:
+      ```typescript
+      import rawTxt from './-day-XX.data.txt?raw'
+      ```
+   c. Include:
       - Challenge title and description
       - Story summary paragraph
       - ASCII art scene
-      - Input areas for both parts
-      - Real-time result display
+      - Input areas for both parts with default input loading:
+        ```typescript
+        const loadDefaultInput = (part: 1 | 2) => {
+          if (part === 1) {
+            setInput1(rawTxt)
+            setResult1(calculatePartOne(rawTxt))
+          } else {
+            setInput2(rawTxt)
+            setResult2(calculatePartTwo(rawTxt))
+          }
+        }
+        ```
+      - "Load Default Input" button for each part
       - "Copy from Part 1" button for Part 2
-   c. Follow this template:
+      - Real-time result display
+   d. Follow this template:
       ```typescript
       import { createFileRoute } from '@tanstack/react-router'
       import { calculatePartOne, calculatePartTwo } from './-day-XX.service'
       import { Scene } from './-scene'
       import { useState } from 'react'
+      import rawTxt from './-day-XX.data.txt?raw'
 
       export const Route = createFileRoute('/(2024)/2024/day-XX/')({
         component: RouteComponent,
@@ -156,6 +238,16 @@ For each new day's challenge, follow these steps to create a consistent solution
           setResult2(calculatePartTwo(input1))
         }
 
+        const loadDefaultInput = (part: 1 | 2) => {
+          if (part === 1) {
+            setInput1(rawTxt)
+            setResult1(calculatePartOne(rawTxt))
+          } else {
+            setInput2(rawTxt)
+            setResult2(calculatePartTwo(rawTxt))
+          }
+        }
+
         return (
           <div className="flex flex-col gap-4">
             <div className="flex flex-col items-center gap-4 max-w-screen-sm mx-auto">
@@ -174,13 +266,22 @@ For each new day's challenge, follow these steps to create a consistent solution
               </div>
 
               {/* Part 1 */}
-              <div className="flex flex-col gap-4">
-                <h4>Part 1</h4>
+              <div className="flex flex-col gap-4 w-full">
+                <h4 className="text-xl font-semibold">Part 1</h4>
                 <textarea
                   value={input1}
                   onChange={handleInput1Change}
                   className="w-full h-48 p-2 border rounded font-mono text-sm bg-gray-50 dark:bg-gray-900 dark:border-gray-700"
+                  placeholder="Paste your puzzle input here"
                 />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => loadDefaultInput(1)}
+                    className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-fit"
+                  >
+                    Load Default Input
+                  </button>
+                </div>
                 {result1 !== null && (
                   <div className="text-center">
                     <h5 className="text-lg font-semibold mb-2">Result:</h5>
@@ -192,17 +293,24 @@ For each new day's challenge, follow these steps to create a consistent solution
               </div>
 
               {/* Part 2 */}
-              <div className="flex flex-col gap-4">
-                <h4>Part 2</h4>
+              <div className="flex flex-col gap-4 w-full">
+                <h4 className="text-xl font-semibold">Part 2</h4>
+                <textarea
+                  value={input2}
+                  onChange={handleInput2Change}
+                  className="w-full h-48 p-2 border rounded font-mono text-sm bg-gray-50 dark:bg-gray-900 dark:border-gray-700"
+                  placeholder="Paste your puzzle input here"
+                />
                 <div className="flex gap-2">
-                  <textarea
-                    value={input2}
-                    onChange={handleInput2Change}
-                    className="w-full h-48 p-2 border rounded font-mono text-sm bg-gray-50 dark:bg-gray-900 dark:border-gray-700"
-                  />
+                  <button
+                    onClick={() => loadDefaultInput(2)}
+                    className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-fit"
+                  >
+                    Load Default Input
+                  </button>
                   <button
                     onClick={copyInput}
-                    className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 whitespace-nowrap h-fit"
+                    className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-fit"
                   >
                     Copy from Part 1
                   </button>
@@ -242,7 +350,11 @@ For each new day's challenge, follow these steps to create a consistent solution
 7. Testing
    Run tests using:
    ```bash
-   bun test app/routes/\(2024\)/2024/day-XX/-day-XX.test.ts
+   bun test 2023/day-XX/-day-XX.test.ts
+   ```
+   Example:
+   ```bash
+   bun test 2023/day-01/-day-01.test.ts
    ```
 
 8. Styling Considerations
@@ -253,11 +365,24 @@ For each new day's challenge, follow these steps to create a consistent solution
    - Show results in a highlighted box
    - Ensure ASCII art is visible in both light and dark modes
 
+9. Navigation Update
+   Add a new link in the year's main component (YYYY.tsx):
+   ```typescript
+   <Link
+     to="/YYYY/day-XX"
+     className="text-blue-500 border border-blue-500 rounded-md p-2 px-4 hover:bg-blue-500 hover:text-white"
+     activeProps={{ className: 'bg-blue-500 text-white' }}
+   >
+     Day XX
+   </Link>
+   ```
+
 This process ensures:
 - Clear story presentation with visual elements
 - Consistent structure across all challenges
 - Proper error handling and edge cases
 - Good test coverage
-- User-friendly interface
+- User-friendly interface with default input loading
 - Maintainable code
 - Easy to follow pattern for future challenges
+- Easy navigation between challenge days
