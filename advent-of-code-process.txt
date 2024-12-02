@@ -1,0 +1,263 @@
+Advent of Code Challenge Implementation Process
+
+For each new day's challenge, follow these steps to create a consistent solution structure:
+
+1. Story Processing
+   a. Create a concise one-paragraph summary of the challenge story
+   b. Create a -scene.tsx file with ASCII art representation:
+      ```typescript
+      import { StringLiteralColorizer } from '../../../../components/ASCIIArt/StringLiteralColorizer/StringLiteralColorizer'
+
+      const SceneString = `
+      // ASCII art representing the story
+      // Example:
+      //    _____
+      //   |     |
+      //   | KEY |
+      //   |_____|
+      `
+
+      const SceneColorMap = {
+        // Map characters to Tailwind CSS classes
+        // Example:
+        '_': 'text-gray-400',
+        '|': 'text-gray-400',
+        'K': 'text-green-500',
+        'E': 'text-green-500',
+        'Y': 'text-green-500',
+      }
+
+      export const Scene = () => (
+        <StringLiteralColorizer
+          stringLiteral={SceneString}
+          colorMap={SceneColorMap}
+        />
+      )
+      ```
+   c. ASCII Art Guidelines:
+      - Keep it simple and relevant to the story
+      - Use basic ASCII characters for better compatibility
+      - Include key elements from the challenge
+      - Add animation classes for dynamic elements
+      - Use color mapping for visual interest
+      - Keep size reasonable (typically 15-20 lines max)
+
+2. File Structure Setup
+   Create the following files in app/routes/(2024)/2024/day-XX/ (replace XX with day number):
+   - index.tsx (React component)
+   - -day-XX.service.ts (solution functions)
+   - -day-XX.test.ts (test cases)
+   - -day-XX.data.txt (challenge input)
+   - -scene.tsx (ASCII art representation)
+
+3. Service File (-day-XX.service.ts)
+   a. Create function(s) for each part of the challenge
+   b. Follow this template for each function:
+      ```typescript
+      export function calculatePartOne(input: string | null | undefined): number {
+        // Handle invalid input
+        if (!input) {
+          return 0;
+        }
+        const trimmedInput = String(input).trim();
+        if (trimmedInput === '') {
+          return 0;
+        }
+
+        try {
+          // Parse input
+          const lines = trimmedInput.split('\n');
+          
+          // Solution logic here
+          
+          return result;
+        } catch {
+          return 0;
+        }
+      }
+      ```
+   c. Include proper error handling
+   d. Handle edge cases (empty input, invalid format)
+
+4. Test File (-day-XX.test.ts)
+   a. Create test suite with describe blocks for each part
+   b. Include tests for:
+      - Example case from the challenge prompt
+      - Empty input
+      - Edge cases
+      - Invalid input
+   c. Follow this template:
+      ```typescript
+      import { expect, test, describe } from 'bun:test'
+      import { calculatePartOne, calculatePartTwo } from './-day-XX.service'
+
+      describe('Day XX: Challenge Name', () => {
+        const exampleInput = `...` // from prompt
+
+        describe('Part 1', () => {
+          test('should handle example case from prompt', () => {
+            expect(calculatePartOne(exampleInput)).toBe(expectedResult)
+          })
+
+          test('should handle empty input', () => {
+            expect(calculatePartOne('')).toBe(0)
+          })
+
+          // Additional test cases
+        })
+
+        describe('Part 2', () => {
+          // Similar structure to Part 1
+        })
+      })
+      ```
+
+5. React Component (index.tsx)
+   a. Create a component with sections for both parts
+   b. Include:
+      - Challenge title and description
+      - Story summary paragraph
+      - ASCII art scene
+      - Input areas for both parts
+      - Real-time result display
+      - "Copy from Part 1" button for Part 2
+   c. Follow this template:
+      ```typescript
+      import { createFileRoute } from '@tanstack/react-router'
+      import { calculatePartOne, calculatePartTwo } from './-day-XX.service'
+      import { Scene } from './-scene'
+      import { useState } from 'react'
+
+      export const Route = createFileRoute('/(2024)/2024/day-XX/')({
+        component: RouteComponent,
+      })
+
+      function RouteComponent() {
+        const [input1, setInput1] = useState('')
+        const [input2, setInput2] = useState('')
+        const [result1, setResult1] = useState<number | null>(null)
+        const [result2, setResult2] = useState<number | null>(null)
+
+        // Input handlers
+        const handleInput1Change = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+          const value = e.target.value
+          setInput1(value)
+          setResult1(calculatePartOne(value))
+        }
+
+        const handleInput2Change = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+          const value = e.target.value
+          setInput2(value)
+          setResult2(calculatePartTwo(value))
+        }
+
+        const copyInput = () => {
+          setInput2(input1)
+          setResult2(calculatePartTwo(input1))
+        }
+
+        return (
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col items-center gap-4 max-w-screen-sm mx-auto">
+              <h3 className="text-2xl font-bold">
+                --- Day XX: Challenge Name ---
+              </h3>
+
+              <div className="font-mono mb-4">
+                <Scene />
+              </div>
+
+              <div className="prose dark:prose-invert max-w-none">
+                <p>
+                  {/* One-paragraph story summary */}
+                </p>
+              </div>
+
+              {/* Part 1 */}
+              <div className="flex flex-col gap-4">
+                <h4>Part 1</h4>
+                <textarea
+                  value={input1}
+                  onChange={handleInput1Change}
+                  className="w-full h-48 p-2 border rounded font-mono text-sm bg-gray-50 dark:bg-gray-900 dark:border-gray-700"
+                />
+                {result1 !== null && (
+                  <div className="text-center">
+                    <h5 className="text-lg font-semibold mb-2">Result:</h5>
+                    <div className="font-mono text-xl bg-green-100 dark:bg-green-900 p-4 rounded">
+                      {result1}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Part 2 */}
+              <div className="flex flex-col gap-4">
+                <h4>Part 2</h4>
+                <div className="flex gap-2">
+                  <textarea
+                    value={input2}
+                    onChange={handleInput2Change}
+                    className="w-full h-48 p-2 border rounded font-mono text-sm bg-gray-50 dark:bg-gray-900 dark:border-gray-700"
+                  />
+                  <button
+                    onClick={copyInput}
+                    className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 whitespace-nowrap h-fit"
+                  >
+                    Copy from Part 1
+                  </button>
+                </div>
+                {result2 !== null && (
+                  <div className="text-center">
+                    <h5 className="text-lg font-semibold mb-2">Result:</h5>
+                    <div className="font-mono text-xl bg-green-100 dark:bg-green-900 p-4 rounded">
+                      {result2}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+      }
+      ```
+
+6. Development Process
+   a. Start with story processing:
+      - Write concise summary
+      - Create ASCII art scene
+      - Add color mapping
+   
+   b. Continue with Part 1:
+      - Implement the solution function
+      - Write tests using the example from the prompt
+      - Add edge case tests
+      - Verify all tests pass
+    
+   c. Move to Part 2:
+      - Follow the same process as Part 1
+      - Reuse code where possible
+      - Ensure both parts work independently
+
+7. Testing
+   Run tests using:
+   ```bash
+   bun test app/routes/\(2024\)/2024/day-XX/-day-XX.test.ts
+   ```
+
+8. Styling Considerations
+   - Use consistent styling across all days
+   - Include dark mode support
+   - Make inputs and results clearly visible
+   - Use monospace font for inputs
+   - Show results in a highlighted box
+   - Ensure ASCII art is visible in both light and dark modes
+
+This process ensures:
+- Clear story presentation with visual elements
+- Consistent structure across all challenges
+- Proper error handling and edge cases
+- Good test coverage
+- User-friendly interface
+- Maintainable code
+- Easy to follow pattern for future challenges

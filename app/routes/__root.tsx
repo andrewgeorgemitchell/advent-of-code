@@ -1,11 +1,12 @@
 import {
+  Link,
   Outlet,
   ScrollRestoration,
   createRootRoute,
 } from '@tanstack/react-router'
-import React from 'react'
 import { Meta, Scripts } from '@tanstack/start'
 import type { ReactNode } from 'react'
+import globalCss from '../styles/global.css?url'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -21,6 +22,7 @@ export const Route = createRootRoute({
         title: 'Advent of Code',
       },
     ],
+    links: [{ rel: 'stylesheet', href: globalCss }],
   }),
   component: RootComponent,
 })
@@ -39,8 +41,21 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       <head>
         <Meta />
       </head>
-      <body>
-        {children}
+      <body className="dark">
+        <div className="min-h-screen bg-gray-900 text-white">
+          <div className="relative container mx-auto px-4 py-8 ">
+            <nav className="flex justify-between items-center mb-8">
+              <h1 className="text-4xl font-bold">Advent of Code/Typescript</h1>
+              <Link
+                to="/2024"
+                className="text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                2024
+              </Link>
+            </nav>
+            <main>{children}</main>
+          </div>
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>

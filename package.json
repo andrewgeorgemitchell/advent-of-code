@@ -25,8 +25,10 @@
     "@tanstack/react-router": "^1.85.0",
     "@tanstack/start": "^1.85.0",
     "bun": "^1.1.21",
+    "nanoid": "^5.0.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "tailwindcss-animate": "^1.0.7",
     "vinxi": "^0.4.3"
   },
   "devDependencies": {
@@ -35,10 +37,13 @@
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
     "bun-types": "1.1.38",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
+    "postcss": "^8.4.49",
     "prettier": "3.1.1",
+    "tailwindcss": "^3.4.15",
     "tsx": "^3.13.0",
     "type-testing": "^0.2.0",
     "typescript": "^5.7.2"

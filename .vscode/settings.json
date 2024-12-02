@@ -26,5 +26,8 @@
   "editor.formatOnSave": true,
   "editor.quickSuggestions": {
     "strings": true
+  },
+  "files.watcherExclude": {
+    "**/routeTree.gen.ts": true
   }
 }
