@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as R20242024Import } from './routes/(2024)/2024'
 import { Route as R20232023Import } from './routes/(2023)/2023'
+import { Route as R20242024Day03IndexImport } from './routes/(2024)/2024/day-03/index'
 import { Route as R20242024Day02IndexImport } from './routes/(2024)/2024/day-02/index'
 import { Route as R20242024Day01IndexImport } from './routes/(2024)/2024/day-01/index'
 import { Route as R20232023Day03IndexImport } from './routes/(2023)/2023/day-03/index'
@@ -38,6 +39,12 @@ const R20232023Route = R20232023Import.update({
   id: '/(2023)/2023',
   path: '/2023',
   getParentRoute: () => rootRoute,
+} as any)
+
+const R20242024Day03IndexRoute = R20242024Day03IndexImport.update({
+  id: '/day-03/',
+  path: '/day-03/',
+  getParentRoute: () => R20242024Route,
 } as any)
 
 const R20242024Day02IndexRoute = R20242024Day02IndexImport.update({
@@ -130,6 +137,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof R20242024Day02IndexImport
       parentRoute: typeof R20242024Import
     }
+    '/(2024)/2024/day-03/': {
+      id: '/(2024)/2024/day-03/'
+      path: '/day-03'
+      fullPath: '/2024/day-03'
+      preLoaderRoute: typeof R20242024Day03IndexImport
+      parentRoute: typeof R20242024Import
+    }
   }
 }
 
@@ -154,11 +168,13 @@ const R20232023RouteWithChildren = R20232023Route._addFileChildren(
 interface R20242024RouteChildren {
   R20242024Day01IndexRoute: typeof R20242024Day01IndexRoute
   R20242024Day02IndexRoute: typeof R20242024Day02IndexRoute
+  R20242024Day03IndexRoute: typeof R20242024Day03IndexRoute
 }
 
 const R20242024RouteChildren: R20242024RouteChildren = {
   R20242024Day01IndexRoute: R20242024Day01IndexRoute,
   R20242024Day02IndexRoute: R20242024Day02IndexRoute,
+  R20242024Day03IndexRoute: R20242024Day03IndexRoute,
 }
 
 const R20242024RouteWithChildren = R20242024Route._addFileChildren(
@@ -174,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/2023/day-03': typeof R20232023Day03IndexRoute
   '/2024/day-01': typeof R20242024Day01IndexRoute
   '/2024/day-02': typeof R20242024Day02IndexRoute
+  '/2024/day-03': typeof R20242024Day03IndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -185,6 +202,7 @@ export interface FileRoutesByTo {
   '/2023/day-03': typeof R20232023Day03IndexRoute
   '/2024/day-01': typeof R20242024Day01IndexRoute
   '/2024/day-02': typeof R20242024Day02IndexRoute
+  '/2024/day-03': typeof R20242024Day03IndexRoute
 }
 
 export interface FileRoutesById {
@@ -197,6 +215,7 @@ export interface FileRoutesById {
   '/(2023)/2023/day-03/': typeof R20232023Day03IndexRoute
   '/(2024)/2024/day-01/': typeof R20242024Day01IndexRoute
   '/(2024)/2024/day-02/': typeof R20242024Day02IndexRoute
+  '/(2024)/2024/day-03/': typeof R20242024Day03IndexRoute
 }
 
 export interface FileRouteTypes {
@@ -210,6 +229,7 @@ export interface FileRouteTypes {
     | '/2023/day-03'
     | '/2024/day-01'
     | '/2024/day-02'
+    | '/2024/day-03'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -220,6 +240,7 @@ export interface FileRouteTypes {
     | '/2023/day-03'
     | '/2024/day-01'
     | '/2024/day-02'
+    | '/2024/day-03'
   id:
     | '__root__'
     | '/'
@@ -230,6 +251,7 @@ export interface FileRouteTypes {
     | '/(2023)/2023/day-03/'
     | '/(2024)/2024/day-01/'
     | '/(2024)/2024/day-02/'
+    | '/(2024)/2024/day-03/'
   fileRoutesById: FileRoutesById
 }
 
@@ -275,7 +297,8 @@ export const routeTree = rootRoute
       "filePath": "(2024)/2024.tsx",
       "children": [
         "/(2024)/2024/day-01/",
-        "/(2024)/2024/day-02/"
+        "/(2024)/2024/day-02/",
+        "/(2024)/2024/day-03/"
       ]
     },
     "/(2023)/2023/day-01/": {
@@ -296,6 +319,10 @@ export const routeTree = rootRoute
     },
     "/(2024)/2024/day-02/": {
       "filePath": "(2024)/2024/day-02/index.tsx",
+      "parent": "/(2024)/2024"
+    },
+    "/(2024)/2024/day-03/": {
+      "filePath": "(2024)/2024/day-03/index.tsx",
       "parent": "/(2024)/2024"
     }
   }
