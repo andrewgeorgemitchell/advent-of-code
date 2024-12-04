@@ -30,6 +30,13 @@ function RouteComponent() {
         >
           Day 3
         </Link>
+        <Link
+          to="/2024/day-04"
+          className="text-blue-500 border border-blue-500 rounded-md p-2 px-4 hover:bg-blue-500 hover:text-white"
+          activeProps={{ className: 'bg-blue-500 text-white' }}
+        >
+          Day 4
+        </Link>
       </div>
       <Outlet />
     </div>
